@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="test1"></div>
+  <div id="test2"></div>
+  <div id="test3"></div>
+  <script type="text/javascript" src="../js/react.development.js"></script>
+  <script type="text/javascript" src="../js/react-dom.development.js"></script>
+  <script type="text/javascript" src="../js/babel.min.js"></script>
+  <script type="text/javascript" src="../js/prop-types.js"></script>
+
+  <script type="text/babel">
+    //创建组件
+    class Demo extends React.Component{
+
+      // 通过onXxx属性制定事件处理函数（注意大小写）
+      // 除了ref也可以用event.target得到发生事件的DOM元素对象 event.target可以得到发生事件的事件元也就是input框
+      // 发生事件的元素正好是要操作的元素的时候是可以省略ref的
+
+      //创建ref容器
+      //React.createRef可以返回一个容器，该容器可以存储被ref所标识的节点，该容器只能存一个 专人专用
+      myRef = React.createRef()
+      myRef2 = React.createRef()
+      
+      showData = () => {
+        console.log(this.myRef) //输出的是{current: input} 是key和value
+        alert(this.myRef.current.value)
+      }
+      showData2 = (event) => {
+        console.log(event.target.value)
+      }
+
+      render() {
+        return (
+          <div>
+            <input ref={this.myRef} type="text" name="" id=""/> &nbsp; 
+            <button onClick={this.showData}>点我提示数据</button> &nbsp;
+            <input onBlur={this.showData2} type="text" name="" id=""/> &nbsp;
+          </div>
+        )
+      }
+    }
+
+    //渲染
+    ReactDOM.render(<Demo/>,document.getElementById('test1'));
+  </script>
+</body>
+</html>

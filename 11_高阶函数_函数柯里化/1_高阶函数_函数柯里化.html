@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="test"></div>
+  <script type="text/javascript" src="../js/react.development.js"></script>
+  <script type="text/javascript" src="../js/react-dom.development.js"></script>
+  <script type="text/javascript" src="../js/babel.min.js"></script>
+  <script type="text/javascript" src="../js/prop-types.js"></script>
+  
+  <script type="text/babel">
+  // 受控组件：页面中输入类的DOM 用onChange保存到状态中 要用的时候从状态中取 省略掉ref
+  
+  // 不指定form表单提交方式 默认是GET 携带的参数是query参数 input框应该加name=''
+    class Login extends React.Component {
+      //初始化
+      state = {
+        uername:'',
+        pwd:''
+      }
+
+      // 事件的回调this.xxx 函数用等号加箭头函数
+      handleSubmit = () => {
+        event.preventDefault()  //阻止表单提交
+        const {uername,pwd} = this.state
+        alert(`输入的用户名是:${uername}，密码是${pwd}`)
+      }
+
+      //dataType指传入的uername pwd
+      //onChange真正调用的是函数的返回值也就是return那里
+      saveFormData = (dataType) => {
+        return (event) => {
+          this.setState({[dataType]:event.target.value})
+        }
+      }
+      //this.xxx必须拿函数（箭头函数）作为onChange的回调  saveFormData返回的是一个函数
+      render() {
+        return (
+          <form action='http://www.atguigu.com' onSubmit={this.handleSubmit}>
+            用户名：<input onChange={this.saveFormData('uername')} type="text" name='uername'/>
+            密码：<input onChange={this.saveFormData('pwd')} type="password" name='pwd'/>
+            <button>登陆</button>
+          </form>
+        );
+      }
+    }
+
+    // saveFormData是一个高阶函数 也是应用了函数的柯里化
+    // 高阶函数需要满足如下任意一个条件：
+    // 1、若A函数 接受的参数是一个函数
+    // 2、若A函数 调用的返回值依然是一个函数
+    // 常见的：Promise setTimeout arr.map()
+
+    // 函数的柯里化：通过函数调用继续返回函数的方式 实现多次接受参数最后统一处理的函数编码形式
+    ReactDOM.render(<Login/>,document.getElementById('test'));
+  </script>
+</body>
+</html>

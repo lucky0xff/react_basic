@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="test"></div>
+  <script type="text/javascript" src="../js/17.0.1/react.development.js"></script>
+  <script type="text/javascript" src="../js/17.0.1/react-dom.development.js"></script>
+  <script type="text/javascript" src="../js/17.0.1/babel.min.js"></script>
+  <script type="text/javascript" src="../js/17.0.1/prop-types.js"></script>
+  
+  <script type="text/babel">
+  // 如果对数据有逆序操作 或者包含输入类的DOM 用index作为key会引发问题
+  // 一般都是用卫衣标示作为key
+  class Person extends React.Component {
+    state = {
+      persons:[
+        {id:1,name:'mhy',age:18},
+        {id:2,name:'gzf',age:20}
+      ]
+    }
+    add = () =>{
+      const {persons} = this.state
+      const p = {id:persons.id+1,name:'小王',age:21}
+      this.setState({persons:[p,...persons]})
+    }
+    render() {
+      return(
+        <div>
+          <h2>展示人员</h2>
+          <button onClick={this.add}>添加一个小王</button>
+          <h1>使用index作为key</h1>
+          <ul>
+            {
+              this.state.persons.map((personObj,index)=>{
+                return <li key={index}>{personObj.name}--{personObj.age} <input type="text"/></li>
+              })
+            }
+          </ul>
+          <hr/>
+          <hr/>
+          <hr/>
+          <h1>使用id作为key</h1>
+          <ul>
+            {
+              this.state.persons.map((personObj)=>{
+                return <li key={personObj.id}>{personObj.name}--{personObj.age}<input type="text"/></li>
+              })
+            }
+          </ul>
+        </div>
+      )
+    }
+  }
+  ReactDOM.render(<Person/>,document.getElementById('test'))
+  </script>
+</body>
+</html>

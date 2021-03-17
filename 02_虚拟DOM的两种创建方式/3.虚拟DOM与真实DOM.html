@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="test"></div>
+
+  <script type="text/javascript" src="../js/react.development.js"></script>
+  <script type="text/javascript" src="../js/react-dom.development.js"></script>
+  <script type="text/javascript" src="../js/babel.min.js"></script>
+
+  <script type="text/babel">
+    //1.创建虚拟DOM
+    // const VDOM = <h1 id="title"><span>Hello React</span></h1>   //不要写引号 因为不是字符串
+    const VDOM = (
+      <h1 id="title">
+        <span>Hello React</span>
+      </h1>
+    )
+    //2.渲染DOM到页面
+    // ReactDom.render(虚拟Dom,容器)
+    ReactDOM.render(VDOM,document.getElementById('test')) //DOM要大写
+
+    console.log('虚拟DOM',VDOM);
+    const TDOM = document.getElementById('test')
+    console.log('真实DOM',TDOM);
+
+    // 虚拟DOM本质是Object
+    // 虚拟DOM比较“轻”，因为虚拟DOM只是React内部在用不需要那么多属性
+    // 虚拟DOM最终会被转换成真实DOM
+  </script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="test"></div>
+  <script type="text/javascript" src="../js/react.development.js"></script>
+  <script type="text/javascript" src="../js/react-dom.development.js"></script>
+  <script type="text/javascript" src="../js/babel.min.js"></script>
+  <script type="text/javascript" src="../js/prop-types.js"></script>
+  
+  <script type="text/babel">
+  // 受控组件：页面中输入类的DOM 用onChange保存到状态中 要用的时候从状态中取 省略掉ref
+  
+  // 不指定form表单提交方式 默认是GET 携带的参数是query参数 input框应该加name=''
+    class Login extends React.Component {
+      //初始化
+      state = {
+        uername:'',
+        pwd:''
+      }
+
+      // 事件的回调this.xxx 函数用等号加箭头函数
+      handleSubmit = () => {
+        event.preventDefault()  //阻止表单提交
+        const {uername,pwd} = this.state
+        alert(`输入的用户名是:${uername}，密码是${pwd}`)
+      }
+      // 给input绑定的onchange 想要拿到的也是input 所以用event.target
+      demo = (event) => {
+        this.setState({
+          uername:event.target.value
+        })
+      }
+      // 给input绑定的onchange 想要拿到的也是input 所以用event.target
+      demo2 = (event) => {
+        this.setState({
+          pwd:event.target.value
+        })
+      }
+
+      render() {
+        return (
+          <form action='http://www.atguigu.com' onSubmit={this.handleSubmit}>
+            用户名：<input onChange={this.demo} type="text" name='uername'/>
+            密码：<input onChange={this.demo2} type="password" name='pwd'/>
+            <button>登陆</button>
+          </form>
+        );
+      }
+    }
+
+    ReactDOM.render(<Login/>,document.getElementById('test'));
+  </script>
+</body>
+</html>

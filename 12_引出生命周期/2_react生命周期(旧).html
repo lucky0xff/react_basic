@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="test"></div>
+  <script type="text/javascript" src="../js/react.development.js"></script>
+  <script type="text/javascript" src="../js/react-dom.development.js"></script>
+  <script type="text/javascript" src="../js/babel.min.js"></script>
+  <script type="text/javascript" src="../js/prop-types.js"></script>
+  
+  <script type="text/babel">
+    class Count extends React.Component {
+      //构造器
+      constructor(props) {
+        console.log('constructor')
+        super(props)
+        //初始化状态
+        this.state = {count:0}
+      }
+
+      add = ()=> {
+        let {count} = this.state
+        count+=1
+        this.setState({count})
+      }
+      death = ()=> {
+        ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+      }
+      force = ()=> {
+        this.forceUpdate()
+      }
+
+      // 组件将要挂载的钩子
+      componentWillMount() {
+        console.log('componentWillMount')
+      }
+
+      // 组件挂载完毕的钩子
+      componentDidMount() {
+        console.log('componentDidMount')
+      }
+
+      // 组件将要卸载的钩子
+      componentWillUnmount() {
+        console.log('componentWillUnmount')
+      }
+
+      // 控制组件更新的阀门
+      shouldComponentUpdate() {
+        console.log('shouldComponentUpdate')
+        return true //必须返回布偶值 false的话阀门关闭
+      }
+
+      // 组件将要更新的钩子
+      componentWillUpdate() {
+        console.log('componentWillUpdate')
+      }
+
+      // 组件更新完毕的钩子
+      componentDidUpdate() {
+        console.log('componentDidUpdate')
+      }
+
+      render() {
+        console.log('render')
+        return (
+          <div>
+            <h2>当前求和为：{this.state.count}</h2>
+            <button onClick={this.add}>点我加1</button>
+            <button onClick={this.death}>卸载组件</button>
+            <button onClick={this.force}>不更改任何状态中的数据，强制更新</button>
+          </div>
+        );
+      }
+    }
+    
+    //父组件
+    class A extends React.Component {
+      state = {carName:'MINI'}
+      changeCar=()=> {
+          this.setState({carName:'MINI Cooper'})
+        }
+      render() {
+        return (
+           <div>
+            <div>A</div>
+            <button onClick={this.changeCar}>换车</button>
+            <B carName={this.state.carName}/>
+           </div>
+        );
+      }
+    }
+    //子组件
+    class B extends React.Component {
+      // 组件将要接收新的props的钩子
+      componentWillReceiveProps() {
+        console.log('componentWillReceiveProp')
+      }
+      render() {
+        return (
+           <div>B,我接收到的车是{this.props.carName}</div>
+        );
+      }
+    }
+    ReactDOM.render(<A/>,document.getElementById('test'));
+
+    // 常用的componentDidMount做一些初始化的事 componentWillUnmount做一些收尾的事 render必须要用
+  </script>
+</body>
+</html>
